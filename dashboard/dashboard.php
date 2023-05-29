@@ -7,9 +7,13 @@ include "../include/head.php";
 
 
 $nama = $_SESSION['qwe'];
+$nu = $_SESSION['nomor'];
+$fungsi = $_SESSION['fungsi'];
 
 if ($_SESSION['role'] == "user") {
 	$data = mysqli_query($koneksi, "SELECT * FROM `tb_reservasi` WHERE `tb_reservasi`.`user` = '$nama' ORDER BY id_reservasi DESC");
+	// $datauser = mysqli_query($koneksi, "SELECT `nomor` FROM `tb_user` WHERE `tb_user`.`nomor` = '$nu'");
+	// $nomoru = mysqli_fetch_assoc($datauser);
 } else {
 	$data = mysqli_query($koneksi, "SELECT * FROM `tb_reservasi` ORDER BY `id_reservasi` DESC");
 }
@@ -75,6 +79,8 @@ if ($_SESSION['role'] == "user") {
 				<div class="modal-footer">
 					<input type="hidden" value="<?= $nama; ?>" name="user">
 					<input type="hidden" value="<?= $_SESSION['id'] ?>" name="ids">
+					<input type="hidden" value="<?= $nu; ?>" name="nomor">
+					<input type="hidden" value="<?= $fungsi; ?>" name="fungsi">
 					<input type="hidden" value="tambahreservasi" name="aksi">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
 					<button type="submit" class="btn btn-success">Simpan</button>
@@ -154,8 +160,8 @@ if ($_SESSION['role'] == "user") {
 					<tr>
 						<th>No</th>
 						<th>No. Pesanan</th>
-						<th>Lokasi</th>
 						<th>Tujuan</th>
+						<th>Maksud</th>
 						<th>Tanggal dan Waktu</th>
 						<th>Status</th>
 						<!-- <th>Aksi</th> -->
@@ -196,8 +202,13 @@ if ($_SESSION['role'] == "user") {
 								?>
 									<div class="badge rounded-pill bg-light-success text-success w-100">Selesai</div>
 								<?php
+								} else if ($d['status'] == "ditolak") {
+								?>
+									<div class="badge rounded-pill bg-light-danger text-danger w-100">Ditolak</div>
+								<?php
 								}
 								?>
+
 
 							</td>
 							<!-- <td>

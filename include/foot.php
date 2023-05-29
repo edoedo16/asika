@@ -74,6 +74,7 @@
 							$('#nopol1').val(obj.nopol);
 							$('#model1').val(obj.model);
 							$('#idsa1').val(obj.id);
+							$('#nodriver').val(obj.notelp);
 						}
 					});
 				});
@@ -117,16 +118,59 @@
 				$(document).on('click', '#reservasimodal', function() {
 					var nopes = $(this).data('reservasi');
 					var id = $(this).data('reservasiid');
+					var nomor = $(this).data('nomoruser');
 
 					//alert(nopes);
 
 					$('#nopes').val(nopes);
 					$('#ids').val(id);
+					$('#nomor').val(nomor);
 
 				});
 				//end for data dari modal setuju
 
+				//for data tolak reservasi
+				$(document).on('click', '#tolakreservasimodal', function() {
+					var res = $(this).data('nores');
+					var nomor = $(this).data('nomoruser');
 
+					//alert(nomor);
+
+					$('#idres').val(res);
+					$('#nomoru').val(nomor);
+				});
+				//end for data tolak reservasi
+
+				//for data terima akun
+				$(document).on('click', '#terimaakun', function() {
+					var nama = $(this).data('nama');
+					var nomor = $(this).data('nomor');
+					var fungsi = $(this).data('fungsi');
+					var username = $(this).data('username');
+					var password = $(this).data('password');
+					var idu = $(this).data('idu');
+
+					//alert(nomor);
+
+					$('#nama').val(nama);
+					$('#nomor').val(nomor);
+					$('#fungsi').val(fungsi);
+					$('#username').val(username);
+					$('#pass').val(password);
+					$('#idu').val(idu);
+
+				});
+				//end for data terima akun
+
+				//for tolak akun
+				$(document).on('click', '#tolakakun', function() {
+					var idu = $(this).data('idu');
+					var nomor = $(this).data('nomor');
+
+					$('#idtolak').val(idu);
+					$('#nomorus').val(nomor);
+
+				});
 
 			});
 		</script>

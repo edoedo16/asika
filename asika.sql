@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Bulan Mei 2023 pada 04.55
+-- Waktu pembuatan: 30 Bulan Mei 2023 pada 01.43
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -54,28 +54,28 @@ CREATE TABLE `tb_reservasi` (
   `tujuan` varchar(255) NOT NULL,
   `maksud` varchar(255) NOT NULL,
   `user` varchar(100) NOT NULL,
+  `fungsi` varchar(100) NOT NULL,
+  `nomor` varchar(50) NOT NULL,
   `tanggal` varchar(100) NOT NULL,
   `waktu` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL DEFAULT 'pending',
-  `id_user` int(100) NOT NULL,
-  `waktu_selesai` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `id_user` varchar(100) NOT NULL,
+  `waktu_selesai` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `tb_reservasi`
 --
 
-INSERT INTO `tb_reservasi` (`id_reservasi`, `no_pesanan`, `tujuan`, `maksud`, `user`, `tanggal`, `waktu`, `status`, `id_user`, `waktu_selesai`) VALUES
-(34, '6466e846e8e2e', 'test', 'test', 'Pedro V Rapar', '2023-05-19', '11:08', 'selesai', 1, '2023-05-21 18:56:12'),
-(35, '6466e84ebe3b1', 'tsetasf', 'aasdfasdf', 'Pedro V Rapar', '2023-05-19', '11:09', 'selesai', 1, '2023-05-21 18:56:12'),
-(37, '646717cd5d75c', 'test', 'tesea', 'Pedro V Rapar', '2023-05-19', '02:31', 'selesai', 1, '2023-05-21 18:57:04'),
-(39, '646b5bfec9c1d', 'test', 'testsdfsdf', 'Pedro V Rapar', '2023-05-23', '09:00', 'selesai', 1, '2023-05-24 02:52:36'),
-(41, '646d68544456d', 'tset', 'test', 'Pedro V Rapar', '2023-05-24', '10:30', 'selesai', 1, '2023-05-24 02:52:59'),
-(42, '646d68d64c2c2', 'coba', 'coba', 'User 1', '2023-05-24', '10:30', 'selesai', 3, '2023-05-24 01:32:24'),
-(43, '646d6b0d9e803', 'Manado', 'mantos', 'User SCM', '2023-05-24', '13:00', 'selesai', 6, '2023-05-24 01:42:09'),
-(44, '646d755676119', '123', '123', 'User 1', '2023-05-24', '10:24', 'selesai', 3, '2023-05-24 02:30:09'),
-(45, '646d778510822', 'test', 'test', 'User 1', '2023-05-24', '10:33', 'selesai', 3, '2023-05-24 02:36:33'),
-(46, '646d79d17fc6d', 'test', 'tset', 'User 1', '2023-05-24', '10:43', 'selesai', 3, '2023-05-24 02:44:04');
+INSERT INTO `tb_reservasi` (`id_reservasi`, `no_pesanan`, `tujuan`, `maksud`, `user`, `fungsi`, `nomor`, `tanggal`, `waktu`, `status`, `id_user`, `waktu_selesai`, `keterangan`) VALUES
+(53, '64701fd6d8699', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-26', '10:56', 'selesai', '6', '2023-05-29 01:38:25', ''),
+(61, '6473f31d969bb', 'test', 'test', 'User SCM', '', '', '2023-05-29', '08:33', 'selesai', '6', '2023-05-29 01:40:16', ''),
+(62, '6473fc6d44ee0', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-29', '09:14', 'selesai', '6', '2023-05-29 01:40:59', ''),
+(63, '647404df7473e', 'test', 'test', 'Pedro V Rapar', 'Developer', '085823404770', '2023-05-29', '09:49', 'ditolak', '1', '2023-05-29 03:09:33', 'testasets'),
+(64, '6474178731404', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-29', '11:09', 'ditolak', '6', '2023-05-29 03:10:26', 'Faldy sementara tidor'),
+(65, '647418a5d8715', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-29', '11:14', 'ditolak', '6', '2023-05-29 03:15:12', 'tidak ada driver'),
+(66, '64741ae8bf769', 'PLTP 5 &amp; 6', 'Monitoring Jaringan', 'Sapi', 'ICT', '085158843252', '2023-05-29', '13:30', 'selesai', '8', '2023-05-29 03:25:08', '');
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,14 @@ INSERT INTO `tb_setuju` (`id_setuju`, `id_reservasi`, `id_supir`, `id_kendaraan`
 ('STJ1684892461', '43', 'DRV1684892233', 'MBL1684781834'),
 ('STJ1684895069', '44', 'DRV1684781681', 'MBL1684781878'),
 ('STJ1684895634', '45', 'DRV1684855826', 'MBL1684868923'),
-('STJ1684896215', '46', 'DRV1684781681', 'MBL1684781878');
+('STJ1684896215', '46', 'DRV1684781681', 'MBL1684781878'),
+('STJ1684910559', '47', 'DRV1684891677', 'MBL1684781878'),
+('STJ1685101996', '60', 'DRV1684781681', 'MBL1684781878'),
+('STJ1685320205', '53', 'DRV1684781681', 'MBL1684781878'),
+('STJ1685322512', '61', 'DRV1684781681', 'MBL1684781878'),
+('STJ1685322964', '62', 'DRV1684781681', 'MBL1684781878'),
+('STJ1685323055', '62', 'DRV1684781681', 'MBL1684781878'),
+('STJ1685330675', '66', 'DRV1684892233', 'MBL1684781834');
 
 -- --------------------------------------------------------
 
@@ -137,11 +144,12 @@ CREATE TABLE `tb_status` (
 --
 
 INSERT INTO `tb_status` (`id_status`, `id_setuju`, `id_supir`, `status`) VALUES
-(1, 'STJ1684891913', 'DRV1684781669', 'Ready'),
-(2, 'STJ1684896215', 'DRV1684781681', 'Ready'),
-(3, 'STJ1684895634', 'DRV1684855826', 'Sibuk'),
-(4, 'STJ1684891772', 'DRV1684891677', 'Ready'),
-(5, 'STJ1684892461', 'DRV1684892233', 'Sibuk');
+(1, '', 'DRV1684781669', 'Ready'),
+(2, '', 'DRV1684781681', 'Ready'),
+(3, '', 'DRV1684855826', 'Ready'),
+(4, '', 'DRV1684891677', 'Ready'),
+(5, '', 'DRV1684892233', 'Ready'),
+(6, NULL, 'DRV1685070918', 'Ready');
 
 -- --------------------------------------------------------
 
@@ -167,7 +175,8 @@ INSERT INTO `tb_supir` (`id_supir`, `nama`, `nomor_telp`, `id_kendaraan`, `no_po
 ('DRV1684781681', 'Faldy', '085817384156', 'MBL1684781878', 'DB 0116 GG', 'Rubicon'),
 ('DRV1684855826', 'Test', '123321', 'MBL1684868923', 'DB 123 TEST', 'Tesla'),
 ('DRV1684891677', 'Patrik', '0123897', 'MBL1684781878', 'DB 0116 GG', 'Rubicon'),
-('DRV1684892233', 'yayan', '091233333', 'MBL1684781834', 'DB 4110 GS', 'Toyota Supra');
+('DRV1684892233', 'Yayan', '08975574033', 'MBL1684781834', 'DB 4110 GS', 'Toyota Supra'),
+('DRV1685070918', 'Ka Shandy', '085256031858', 'MBL1684781878', 'DB 0116 GG', 'Rubicon');
 
 -- --------------------------------------------------------
 
@@ -178,6 +187,7 @@ INSERT INTO `tb_supir` (`id_supir`, `nama`, `nomor_telp`, `id_kendaraan`, `no_po
 CREATE TABLE `tb_user` (
   `id_user` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
+  `nomor` varchar(50) NOT NULL,
   `fungsi` varchar(50) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
@@ -188,11 +198,28 @@ CREATE TABLE `tb_user` (
 -- Dumping data untuk tabel `tb_user`
 --
 
-INSERT INTO `tb_user` (`id_user`, `nama`, `fungsi`, `username`, `password`, `role`) VALUES
-(1, 'Pedro V Rapar', 'Developer', 'edo', 'edoedo', 'developer'),
-(2, 'Administrator', 'ICT', 'admin', 'admin', 'admin'),
-(3, 'User 1', 'ICT', 'user', 'user', 'user'),
-(6, 'User SCM', 'SCM', 'user2', 'user2', 'user');
+INSERT INTO `tb_user` (`id_user`, `nama`, `nomor`, `fungsi`, `username`, `password`, `role`) VALUES
+(1, 'Pedro V Rapar', '085823404770', 'Developer', 'edo', 'edoedo', 'developer'),
+(2, 'Administrator', '085817384156', 'ICT', 'admin', 'admin', 'admin'),
+(3, 'User 1', '085256031858', 'ICT', 'user', 'user', 'user'),
+(6, 'User SCM', '123123123', 'SCM', 'user2', 'user2', 'user'),
+(7, 'tes', '123', 'test', 'test', 'test', 'user'),
+(8, 'Sapi', '085158843252', 'ICT', 'user3', 'user3', 'user');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_user_sementara`
+--
+
+CREATE TABLE `tb_user_sementara` (
+  `id_user` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `nomor` varchar(50) NOT NULL,
+  `fungsi` varchar(50) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -235,6 +262,12 @@ ALTER TABLE `tb_user`
   ADD PRIMARY KEY (`id_user`);
 
 --
+-- Indeks untuk tabel `tb_user_sementara`
+--
+ALTER TABLE `tb_user_sementara`
+  ADD PRIMARY KEY (`id_user`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -242,18 +275,24 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT untuk tabel `tb_reservasi`
 --
 ALTER TABLE `tb_reservasi`
-  MODIFY `id_reservasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_reservasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_status`
 --
 ALTER TABLE `tb_status`
-  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_user`
 --
 ALTER TABLE `tb_user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_user_sementara`
+--
+ALTER TABLE `tb_user_sementara`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 

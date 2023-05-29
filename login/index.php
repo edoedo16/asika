@@ -47,7 +47,10 @@ if (isset($_SESSION['nama'])) {
 											<img src="../assets/images/logopertamina.png" width="120" height="120">
 										</div>
 										<div class="mb-0">
-											<img src="../assets/images/logotypepertamina.png" width="120" height="40">
+											<img src="../assets/images/ASIKA-logotype.png" width="180" height="40">
+										</div>
+										<div class="mt-4">
+											<h6 class="text-secondary">APLIKASI RESERVASI KENDARAAN OPERASIONAL KANTOR</h6>
 										</div>
 									</div>
 
@@ -55,7 +58,7 @@ if (isset($_SESSION['nama'])) {
 
 
 									<div class="form-body">
-										<form class="row g-4" action="proses_login.php" method="POST">
+										<form class="row mt-3 g-4" action="proses_login.php" method="POST">
 
 											<div class="col-12">
 												<label for="inputEmailAddress" class="form-label">Username</label>
@@ -95,15 +98,15 @@ if (isset($_SESSION['nama'])) {
 											?>
 
 
-											<div class="col-12">
+											<div class="col-12 mt-5">
 												<div class="d-grid">
 													<button type="submit" name="login" class="btn btn-danger fs-4">Login</button>
 												</div>
 											</div>
-											<!-- <div class="col-12 text-center">
-												<p class="mb-0">Belum ada akun? <a href="#">Daftar disini</a>
+											<div class="col-12 text-center">
+												<p class="mb-0">Belum ada akun? <a href="daftar.php">Daftar disini</a>
 												</p>
-											</div> -->
+											</div>
 										</form>
 									</div>
 								</div>

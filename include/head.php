@@ -53,12 +53,12 @@ if (!isset($_SESSION['qwe'])) {
 		<!--sidebar wrapper -->
 		<div class="sidebar-wrapper" data-simplebar="true">
 			<div class="sidebar-header">
-				<div>
+				<div class="ms-2">
 					<img src="../assets/images/logopertamina.png" class="logo-icon ">
 				</div>
 				<div>
 					<div class="logo-text mt-3">
-						<img src="../assets/images/logotypepertamina.png" width="95" height="27">
+						<img src="../assets/images/ASIKA-logotype.png" width="95" height="20">
 					</div>
 				</div>
 				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
@@ -201,9 +201,16 @@ if (!isset($_SESSION['qwe'])) {
 					</li>
 					<li>
 						<a href="user.php">
-							<div class="parent-icon"><i class='bx bx-user-plus'></i>
+							<div class="parent-icon"><i class='bx bx-user'></i>
 							</div>
 							<div class="menu-title">User</div>
+						</a>
+					</li>
+					<li>
+						<a href="user-sementara.php">
+							<div class="parent-icon"><i class='bx bx-user-plus'></i>
+							</div>
+							<div class="menu-title">User Sementara</div>
 						</a>
 					</li>
 
@@ -225,31 +232,23 @@ if (!isset($_SESSION['qwe'])) {
 		<header>
 			<div class="topbar d-flex align-items-center">
 				<nav class="navbar navbar-expand">
+
 					<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
 					</div>
+
 					<div class="search-bar flex-grow-1">
 					</div>
 					<div class="top-menu ms-auto">
-						<ul class="navbar-nav align-items-center">
-							<li class="nav-item dropdown dropdown-large">
-								<div class="dropdown-menu dropdown-menu-end">
-								</div>
-							</li>
-							<li class="nav-item dropdown dropdown-large">
-								<div class="dropdown-menu dropdown-menu-end">
-									<div class="header-notifications-list">
 
-									</div>
-								</div>
-							</li>
-							<li class="nav-item dropdown dropdown-large">
-								<div class="dropdown-menu dropdown-menu-end">
-									<div class="header-message-list">
+						<div class="header-notifications-list">
 
-									</div>
-								</div>
-							</li>
-						</ul>
+						</div>
+
+						<div class="header-message-list">
+
+						</div>
+
+
 					</div>
 					<div class="user-box dropdown">
 						<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

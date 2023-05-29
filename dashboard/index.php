@@ -6,7 +6,11 @@ include "../include/koneksi.php";
 $title = "Dashboard";
 include "../include/head.php";
 
+
+
 $data = mysqli_query($koneksi, "SELECT * FROM tb_reservasi ORDER BY id_reservasi DESC");
+
+
 
 $datamd = mysqli_query($koneksi, "SELECT * FROM `tb_supir`, `tb_kendaraan` WHERE `tb_supir`.`id_kendaraan` = `tb_kendaraan`.`id_kendaraan` ");
 
@@ -190,8 +194,8 @@ $no = 1;
 					<tr>
 						<th>No</th>
 						<th>No. Reservasi</th>
-						<th>Lokasi</th>
 						<th>Tujuan</th>
+						<th>Maksud</th>
 						<th>User</th>
 						<th>Tanggal dan Waktu</th>
 						<th>Status</th>
@@ -237,8 +241,13 @@ $no = 1;
 								?>
 									<div class="badge rounded-pill bg-light-success text-success w-100">Selesai</div>
 								<?php
+								} else if ($d['status'] == "ditolak") {
+								?>
+									<div class="badge rounded-pill bg-light-danger text-danger w-100">Ditolak</div>
+								<?php
 								}
 								?>
+
 
 							</td>
 							<td>
@@ -247,9 +256,9 @@ $no = 1;
 								if ($d['status'] == "pending") {
 								?>
 									<div class="d-flex order-actions ">
-										<a id="reservasimodal" class="bg bg-success text-white" data-bs-toggle="modal" data-bs-target="#reservasi" data-reservasi="<?= $d['no_pesanan'] ?>" data-reservasiid="<?= $d['id_reservasi'] ?>"><i class=" bx bx-check"></i></a>
+										<a id="reservasimodal" class="bg bg-success text-white" data-bs-toggle="modal" data-bs-target="#reservasi" data-reservasi="<?= $d['no_pesanan'] ?>" data-reservasiid="<?= $d['id_reservasi'] ?>" data-nomoruser="<?= $d['nomor'] ?>"><i class=" bx bx-check"></i></a>
 										<!-- pilih-driver.php?id=<?= $d['id_reservasi']; ?> -->
-										<a href="#" class="bg bg-danger text-white ms-4" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $no; ?>"><i class="bx bx-x"></i></a>
+										<a id="tolakreservasimodal" class="bg bg-danger text-white ms-4" data-bs-toggle="modal" data-bs-target="#tolakreservasi" data-nores="<?= $d['id_reservasi'] ?>" data-nomoruser="<?= $d['nomor'] ?>"><i class="bx bx-x"></i></a>
 									</div>
 
 								<?php
@@ -259,34 +268,6 @@ $no = 1;
 
 
 
-								<!--Hapus modal -->
-
-								<div class="modal fade" id="hapusModal<?= $no; ?>" tabindex="-1" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">Tolak pesanan</h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-
-
-											<div class="modal-body">
-
-											</div>
-											<div class="modal-footer">
-												<form action="#" method="POST">
-													<input type="hidden" value="tolakreservasi" name="aksi">
-													<input type="hidden" value="<?= $d['id_reservasi']; ?>" name="id">
-													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-													<button class="btn btn-danger">Tolak</button>
-												</form>
-											</div>
-
-										</div>
-									</div>
-								</div>
-
-								<!-- end modal -->
 
 							</td>
 						</tr>
@@ -349,12 +330,13 @@ $no = 1;
 					<div class="input-group"><span class="input-group-text bg-transparent"><i class='bx bxs-car'></i></span>
 						<input class="result form-control" id="model1" type="text" autocomplete="off" readonly>
 						<input id="idsa1" name="idmobil" type="hidden">
+						<input id="nodriver" name="nodriver" type="hidden">
 					</div>
-
 			</div>
 			<div class="modal-footer">
 				<input type="hidden" value="inproses" name="status">
 				<input type="hidden" id="ids" name="ids">
+				<input type="hidden" id="nomor" name="nomor">
 				<input type="hidden" name="setujuid" value="<?= $setuju_id; ?>">
 				<input type="hidden" value="setuju" name="aksi">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
@@ -367,6 +349,35 @@ $no = 1;
 <!--end modal  -->
 
 
+<!--Hapus modal -->
+
+<div class="modal fade" id="tolakreservasi" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Tolak pesanan</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form action="action/proses.php" method="POST">
+				<div class="modal-body">
+					<label class="form-label">Keterangan</label>
+					<input type="text" name="ket" class="form-control" style="height: 100px;" autocomplete="off">
+				</div>
+				<div class="modal-footer">
+
+					<input type="hidden" value="tolakreservasi" name="aksi">
+					<input type="hidden" id="idres" name="idres">
+					<input type="hidden" id="nomoru" name="nomoru">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+					<button class="btn btn-danger">Tolak</button>
+			</form>
+		</div>
+
+	</div>
+</div>
+</div>
+
+<!-- end modal -->
 
 
 

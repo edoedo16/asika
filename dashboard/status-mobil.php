@@ -138,7 +138,18 @@ $datastatus = mysqli_query($koneksi, "SELECT * FROM `tb_status` JOIN `tb_supir` 
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="ms-2">
-												<h6 class="mb-1 font-14"><?= $ds['status'] ?></h6>
+												<h6 class="mb-1 font-14">
+													<?php
+													if ($ds['status'] == "Ready") {
+													?>
+														<div class="badge bg-info ">Ready</div>
+													<?php
+													} else if ($ds['status'] == "Sibuk") {
+													?>
+														<div class="badge bg-warning ">Sibuk</div>
+													<?php
+													} ?>
+												</h6>
 											</div>
 										</div>
 									</td>

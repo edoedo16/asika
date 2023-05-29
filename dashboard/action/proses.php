@@ -104,6 +104,20 @@ if (isset($_POST['aksi'])) {
         echo "<script>
                     window.location.href='../index.php'
                     </script>";
+    } else if ($_POST['aksi'] == "tolakreservasi") {
+        $berhasil = tolak_reservasi($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Pesanan ditolak";
+        } else {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Pesanan gagal";
+        }
+
+        echo "<script>
+                    window.location.href='../index.php'
+                    </script>";
     } else if ($_POST['aksi'] == "selesaireservasi") {
 
         $berhasil = selesai_reservasi($_POST);
@@ -169,11 +183,53 @@ if (isset($_POST['aksi'])) {
             $_SESSION['pesan'] = "Data User berhasil ditambahkan";
         } else {
             $_SESSION['alert'] = "gagal";
-            $_SESSION['pesan'] = "Data Driver gagal ditambahkan";
+            $_SESSION['pesan'] = "Data User gagal ditambahkan";
         }
 
         echo "<script>
                     window.location.href='../user.php'
+                    </script>";
+    } else if ($_POST['aksi'] == "tambahusersementara") {
+        $berhasil = tambah_user_sementara($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Data User berhasil ditambahkan";
+        } else {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Data User gagal ditambahkan";
+        }
+
+        echo "<script>
+                    window.location.href='../../login/daftar.php'
+                    </script>";
+    } else if ($_POST['aksi'] == "terimaakun") {
+        $berhasil = terima_user_sementara($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Data User berhasil ditambahkan";
+        } else {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Data User gagal ditambahkan";
+        }
+
+        echo "<script>
+                    window.location.href='../user-sementara.php'
+                    </script>";
+    } else if ($_POST['aksi'] == "tolakakun") {
+        $berhasil = tolak_user_sementara($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Data User berhasil ditolak";
+        } else {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Data User gagal ditolak";
+        }
+
+        echo "<script>
+                    window.location.href='../user-sementara.php'
                     </script>";
     } else if ($_POST['aksi'] == "hapususer") {
         $berhasil = hapus_data_user($_POST);

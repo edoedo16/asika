@@ -45,6 +45,12 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 							</div>
 						</div>
 						<div class="col-12">
+							<label class="form-label">Nomor Whatsapp</label>
+							<div class="input-group"> <span class="input-group-text bg-transparent"><i class='lni lni-whatsapp'></i></span>
+								<input type="number" name="nomor" class="form-control border-start-0" placeholder="Nomor Whatsapp" autocomplete="off" required>
+							</div>
+						</div>
+						<div class="col-12">
 							<label class="form-label">Username</label>
 							<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-user'></i></span>
 								<input type="text" name="user" class="form-control border-start-0" placeholder="Username" autocomplete="off" required>
@@ -150,6 +156,7 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 					<tr>
 						<th>No</th>
 						<th>Nama</th>
+						<th>Nomor Whatsapp</th>
 						<th>Fungsi</th>
 						<th>Aksi</th>
 					</tr>
@@ -172,6 +179,7 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 									</div>
 								</div>
 							</td>
+							<td><?= htmlspecialchars($d['nomor']); ?></td>
 							<td><?= htmlspecialchars($d['fungsi']); ?></td>
 							<td>
 								<div class="d-flex order-actions">
@@ -200,6 +208,12 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 													<label class="form-label">Nama</label>
 													<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-user'></i></span>
 														<input type="text" name="nama" class="form-control border-start-0" placeholder="Nama" autocomplete="off" required value="<?= htmlspecialchars($d['nama']); ?>">
+													</div>
+												</div>
+												<div class="col-12">
+													<label class="form-label">Nama</label>
+													<div class="input-group"> <span class="input-group-text bg-transparent"><i class='lni lni-whatsapp'></i></span>
+														<input type="text" name="nomor" class="form-control border-start-0" placeholder="Nomor Whatsapp" autocomplete="off" required value="<?= htmlspecialchars($d['nomor']); ?>">
 													</div>
 												</div>
 												<div class="col-12">

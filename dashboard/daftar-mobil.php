@@ -175,8 +175,8 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_kendaraan` ORDER BY `id_kendar
 
 							<td>
 								<div class="d-flex order-actions">
-									<a href="javascript:;" class="bg bg-warning text-white" data-bs-toggle="modal" data-bs-target="#editModal<?= $no; ?>"><i class="bx bx-edit-alt"></i></a>
-									<a href="javascript:;" class="bg bg-danger text-white ms-4" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $no; ?>"><i class="bx bx-x"></i></a>
+									<a href="#" class="bg bg-warning text-white" data-bs-toggle="modal" data-bs-target="#editModal<?= $no; ?>"><i class="bx bx-edit-alt"></i></a>
+									<a href="#" class="bg bg-danger text-white  ms-4" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $no; ?>"><i class="bx bx-x"></i></a>
 								</div>
 							</td>
 						</tr>

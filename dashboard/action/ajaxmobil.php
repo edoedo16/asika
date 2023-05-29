@@ -5,6 +5,7 @@ $data_mobil = array(
     'nopol'      =>  $data['no_polisi'],
     'model'      =>  $data['model'],
     'id'         =>  $data['id_kendaraan'],
+    'notelp'     =>  $data['nomor_telp'],
 
 );
 echo json_encode($data_mobil);

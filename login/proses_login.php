@@ -21,6 +21,7 @@ if (isset($_POST['login'])) {
             $_SESSION['fungsi'] = $selek['fungsi'];
             $_SESSION['role'] = $selek['role'];
             $_SESSION['id'] = $selek['id_user'];
+            $_SESSION['nomor'] = $selek['nomor'];
             header("location:../dashboard/");
         } else if ($selek["role"] == "admin") {
             $_SESSION['status'] = "Sukses";
@@ -28,6 +29,7 @@ if (isset($_POST['login'])) {
             $_SESSION['fungsi'] = $selek['fungsi'];
             $_SESSION['role'] = $selek['role'];
             $_SESSION['id'] = $selek['id_user'];
+            $_SESSION['nomor'] = $selek['nomor'];
             header("location:../dashboard/");
         } else if ($selek["role"] == "user") {
             $_SESSION['status'] = "Sukses";
@@ -35,6 +37,7 @@ if (isset($_POST['login'])) {
             $_SESSION['fungsi'] = $selek['fungsi'];
             $_SESSION['role'] = $selek['role'];
             $_SESSION['id'] = $selek['id_user'];
+            $_SESSION['nomor'] = $selek['nomor'];
             header("location:../dashboard/dashboard.php");
         }
     } else {

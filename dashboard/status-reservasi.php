@@ -6,6 +6,7 @@ $title = "Status Reservasi";
 include "../include/head.php";
 
 $id = $_SESSION['id'];
+$nu = $_SESSION['nomor'];
 
 if ($_SESSION['role'] == "user") {
 
@@ -124,6 +125,11 @@ if ($count2 >= 1) {
                                     <td class="card-text">:</td>
                                     <td class="card-text"><?= $d['no_polisi'] ?> - <?= $d['model'] ?></td>
                                 </tr>
+                                <tr>
+                                    <td class="card-text">Nomor</td>
+                                    <td class="card-text">:</td>
+                                    <td class="card-text"><?= $d['nomor_telp'] ?></td>
+                                </tr>
                             </table>
                             <hr>
                             <a href="javascript:;" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#selesaiModal<?= $no; ?>">Selesaikan</a>
@@ -148,6 +154,8 @@ if ($count2 >= 1) {
                                                 <input type="hidden" value="selesai" name="status">
                                                 <input type="hidden" value="<?= $d['id_reservasi'] ?>" name="id">
                                                 <input type="hidden" value="<?= $d['id_supir'] ?>" name="idsupir">
+                                                <input type="hidden" value="<?= $d['nomor_telp'] ?>" name="nodriver">
+                                                <input type="hidden" value="<?= $nu; ?>" name="nomor">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                                                 <button class="btn btn-success">Selesai</button>
                                             </form>
