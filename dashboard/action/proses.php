@@ -273,6 +273,48 @@ if (isset($_POST['aksi'])) {
         echo "<script>
                     window.location.href='../status-mobil.php'
                     </script>";
+    } else if ($_POST['aksi'] == "tambahlokasi") {
+        $berhasil = tambah_lokasi($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Data berhasil ditambahkan";
+        } else {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Data gagal ditambahkan";
+        }
+
+        echo "<script>
+                    window.location.href='../daftar-lokasi.php'
+                    </script>";
+    } else if ($_POST['aksi'] == "editlokasi") {
+        $berhasil = edit_lokasi($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Data berhasil diedit";
+        } else {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Data gagal diedit";
+        }
+
+        echo "<script>
+                    window.location.href='../daftar-lokasi.php'
+                    </script>";
+    } else if ($_POST['aksi'] == "hapuslokasi") {
+        $berhasil = hapus_lokasi($_POST);
+
+        if ($berhasil > 0) {
+            $_SESSION['alert'] = "success";
+            $_SESSION['pesan'] = "Data berhasil dihapus";
+        } else {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Data gagal dihapus";
+        }
+
+        echo "<script>
+                    window.location.href='../daftar-lokasi.php'
+                    </script>";
     }
 }
 

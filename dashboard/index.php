@@ -12,7 +12,10 @@ $data = mysqli_query($koneksi, "SELECT * FROM tb_reservasi ORDER BY id_reservasi
 
 
 
-$datamd = mysqli_query($koneksi, "SELECT * FROM `tb_supir`, `tb_kendaraan` WHERE `tb_supir`.`id_kendaraan` = `tb_kendaraan`.`id_kendaraan` ");
+//$datamd = mysqli_query($koneksi, "SELECT * FROM `tb_supir`, `tb_kendaraan` WHERE `tb_supir`.`id_kendaraan` = `tb_kendaraan`.`id_kendaraan` ");
+
+
+$datamd = mysqli_query($koneksi, "SELECT * FROM `tb_status` JOIN `tb_supir` WHERE `tb_supir`.`id_supir`=`tb_status`.`id_supir` AND `tb_status`.`status` = 'Ready'");
 
 $count = mysqli_num_rows($data);
 
@@ -361,7 +364,8 @@ $no = 1;
 			<form action="action/proses.php" method="POST">
 				<div class="modal-body">
 					<label class="form-label">Keterangan</label>
-					<input type="text" name="ket" class="form-control" style="height: 100px;" autocomplete="off">
+					<!-- <input type="text" name="ket" class="form-control" style="height: 100px;" autocomplete="off"> -->
+					<textarea name="ket" class="form-control"></textarea>
 				</div>
 				<div class="modal-footer">
 

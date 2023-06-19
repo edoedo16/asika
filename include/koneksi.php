@@ -13,3 +13,5 @@ $mobil_id = $mobil . $waktu;
 
 $setuju = "STJ";
 $setuju_id = $setuju . $waktu;
+
+$no_pesanan =  $waktu . "PGELHD";

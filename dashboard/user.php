@@ -184,7 +184,7 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 							<td>
 								<div class="d-flex order-actions">
 									<a href="#" class="bg bg-warning text-white" data-bs-toggle="modal" data-bs-target="#editModal<?= $no; ?>"><i class="bx bx-edit-alt"></i></a>
-									<a href="#" class="bg bg-info text-white ms-4" data-bs-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title="Username : <?= $d['username']; ?> | Password : <?= $d['password']; ?>"><i class="bx bx-show"></i></a>
+									<!-- <a href="#" class="bg bg-info text-white ms-4" data-bs-container="body" data-bs-toggle="tooltip" data-bs-placement="top" title="Username : <?= $d['username']; ?> | Password : <?= $d['password']; ?>"><i class="bx bx-show"></i></a> -->
 									<a href="#" class="bg bg-danger text-white ms-4" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $no; ?>"><i class="bx bx-x"></i></a>
 								</div>
 							</td>
@@ -231,10 +231,10 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 												<div class="col-12">
 													<label class="form-label">Password</label>
 													<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-user'></i></span>
-														<input type="text" name="pass" class="form-control border-start-0" placeholder="Password" autocomplete="off" required value="<?= htmlspecialchars($d['password']); ?>">
+														<input type="text" name="pass" class="form-control border-start-0" placeholder="Password" autocomplete="off" required>
 													</div>
 												</div>
-												<div class="col-12">
+												<div class=" col-12">
 													<label class="form-label">Role</label>
 													<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-label'></i></span>
 														<select name="role" class="form-control">

@@ -14,8 +14,10 @@ if ($_SESSION['role'] == "user") {
 	$data = mysqli_query($koneksi, "SELECT * FROM `tb_reservasi` WHERE `tb_reservasi`.`user` = '$nama' ORDER BY id_reservasi DESC");
 	// $datauser = mysqli_query($koneksi, "SELECT `nomor` FROM `tb_user` WHERE `tb_user`.`nomor` = '$nu'");
 	// $nomoru = mysqli_fetch_assoc($datauser);
+	$datalok = mysqli_query($koneksi, "SELECT * FROM `tb_lokasi`");
 } else {
 	$data = mysqli_query($koneksi, "SELECT * FROM `tb_reservasi` ORDER BY `id_reservasi` DESC");
+	$datalok = mysqli_query($koneksi, "SELECT * FROM `tb_lokasi`");
 }
 
 
@@ -52,15 +54,34 @@ if ($_SESSION['role'] == "user") {
 				<div class="modal-body">
 					<form class="row g-1" action="action/proses.php" method="POST">
 						<div class="col-12">
-							<label class="form-label">Lokasi</label>
+							<label class="form-label">Tujuan</label>
 							<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-map'></i></span>
-								<input type="text" name="tujuan" class="form-control border-start-0" placeholder="Lokasi" autocomplete="off" required>
+								<select name="lokasi" class="form-control border-start-0" id="lokasi">
+									<option selected>Pilih... </option>
+									<?php
+
+									foreach ($datalok as $dr) {
+									?>
+										<option value="<?= $dr['nama_lokasi'] ?>" class="form-control">
+											<?= $dr['nama_lokasi']; ?>
+
+										</option>
+									<?php
+									}
+									?>
+									<option value="lainnya">Lainnya...</option>
+								</select>
+							</div>
+							<div class="display-none mt-2" id="lainnya">
+								<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-location-plus'></i></span>
+									<input type="text" name="lokasi2" class="form-control border-start-0" placeholder="Lokasi" autocomplete="off">
+								</div>
 							</div>
 						</div>
 						<div class="col-12">
-							<label class="form-label">Tujuan</label>
+							<label class="form-label">Maksud</label>
 							<div class="input-group"> <span class="input-group-text bg-transparent"><i class='bx bxs-comment-detail'></i></span>
-								<input type="text" name="maksud" class="form-control border-start-0" placeholder="Tujuan" autocomplete="off" required>
+								<input type="text" name="maksud" class="form-control border-start-0" placeholder="Maksud" autocomplete="off" required>
 							</div>
 						</div>
 						<div class="col-6">
@@ -78,6 +99,7 @@ if ($_SESSION['role'] == "user") {
 				</div>
 				<div class="modal-footer">
 					<input type="hidden" value="<?= $nama; ?>" name="user">
+					<input type="hidden" value="<?= $no_pesanan; ?>" name="nopes">
 					<input type="hidden" value="<?= $_SESSION['id'] ?>" name="ids">
 					<input type="hidden" value="<?= $nu; ?>" name="nomor">
 					<input type="hidden" value="<?= $fungsi; ?>" name="fungsi">

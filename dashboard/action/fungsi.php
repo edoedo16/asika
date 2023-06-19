@@ -9,13 +9,20 @@ $nu = mysqli_fetch_assoc($nomoradmin);
 function tambah_reservasi($data)
 {
     global $koneksi;
+    global $nomoradmin;
 
-    $tujuan = htmlspecialchars($data['tujuan']);
-    $maksud = htmlspecialchars($data['maksud']);
-    $tanggal = htmlspecialchars($data['tanggal']);
-    $waktu = htmlspecialchars($data['waktu']);
-    $no_pesanan = uniqid();
-    $user = htmlspecialchars($data['user']);
+    //$tujuan = $data['tujuan'];
+
+    if ($data['lokasi'] == "lainnya") {
+        $tujuan = $data['lokasi2'];
+    } else {
+        $tujuan = $data['lokasi'];
+    }
+    $maksud = $data['maksud'];
+    $tanggal = $data['tanggal'];
+    $waktu = $data['waktu'];
+    $no_pesanan = $data['nopes'];
+    $user = $data['user'];
     $id = $data['ids'];
     $nomor = $data['nomor'];
     $fungsi = $data['fungsi'];
@@ -24,8 +31,13 @@ function tambah_reservasi($data)
 
     $sql = mysqli_query($koneksi, "INSERT INTO `tb_reservasi` (`no_pesanan`, `tujuan`, `maksud`,`user`, `fungsi`, `nomor`, `tanggal`, `waktu`, `id_user`) VALUES ('$no_pesanan', '$tujuan', '$maksud', '$user','$fungsi', '$nomor', '$tanggal', '$waktu', '$id'); ");
 
-    wa($nomor, $pesan);
-    waadmin($pesan2);
+    waa($nomor, $pesan);
+
+
+    foreach ($nomoradmin as $d) {
+        $nomora = $d['nomor'];
+        waadmin($nomora, $pesan2);
+    }
 
     $hasil = mysqli_affected_rows($koneksi);
 
@@ -74,7 +86,22 @@ function tambah_user($data)
     $role = htmlspecialchars($data['role']);
     $nomorwa = htmlspecialchars($data['nomor']);
 
-    $sql = mysqli_query($koneksi, "INSERT INTO `tb_user` (`nama`,`nomor`, `fungsi`, `username`, `password`, `role`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$pass', '$role'); ");
+    $passhash = password_hash($pass, PASSWORD_BCRYPT);
+
+    $sql = mysqli_query($koneksi, "INSERT INTO `tb_user` (`nama`,`nomor`, `fungsi`, `username`, `password`, `role`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$passhash', '$role'); ");
+
+    $hasil = mysqli_affected_rows($koneksi);
+
+    return $hasil;
+}
+
+function tambah_lokasi($data)
+{
+    global $koneksi;
+
+    $lokasi = $data['lok'];
+
+    $sql = mysqli_query($koneksi, "INSERT INTO `tb_lokasi` (`nama_lokasi`) VALUES ( '$lokasi' ); ");
 
     $hasil = mysqli_affected_rows($koneksi);
 
@@ -84,6 +111,7 @@ function tambah_user($data)
 function tambah_user_sementara($data)
 {
     global $koneksi;
+    global $nomoradmin;
 
     $nama = htmlspecialchars($data['nama']);
     $user = htmlspecialchars($data['user']);
@@ -101,14 +129,17 @@ function tambah_user_sementara($data)
 
     $hasil = mysqli_affected_rows($koneksi);
 
-    wa($nomorwa, $pesan);
+    waa($nomorwa, $pesan);
 
     $pesanadmin = "Ada yang mendaftarkan akun ASIKA, mohon dicek di user sementara. \n";
     $pesanadmin .= "\n";
     $pesanadmin .= "Tetap Semangat dan Stay Safe. \n";
     $pesanadmin .= "Terima Kasih. \n";
 
-    waadmin($pesanadmin);
+    foreach ($nomoradmin as $d) {
+        $nomora = $d['nomor'];
+        waadmin($nomora, $pesanadmin);
+    }
 
     return $hasil;
 }
@@ -135,13 +166,15 @@ function terima_user_sementara($data)
     $pesan .= "\n";
     $pesan .= "Tetap Semangat dan Stay Safe.";
 
-    $sql = mysqli_query($koneksi, "INSERT INTO `tb_user` (`nama`,`nomor`, `fungsi`, `username`, `password`, `role`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$pass', 'user'); ");
+    $passhash = password_hash($pass, PASSWORD_BCRYPT);
+
+    $sql = mysqli_query($koneksi, "INSERT INTO `tb_user` (`nama`,`nomor`, `fungsi`, `username`, `password`, `role`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$passhash', 'user'); ");
 
     $sqll = mysqli_query($koneksi, "DELETE FROM `tb_user_sementara` WHERE `tb_user_sementara`.`id_user` = '$idu'");
 
     $hasil = mysqli_affected_rows($koneksi);
 
-    wa($nomorwa, $pesan);
+    waa($nomorwa, $pesan);
 
     return $hasil;
 }
@@ -168,7 +201,7 @@ function tolak_user_sementara($data)
 
     $hasil = mysqli_affected_rows($koneksi);
 
-    wa($nomorwa, $pesan);
+    waa($nomorwa, $pesan);
 
     return $hasil;
 }
@@ -220,6 +253,19 @@ function hapus_data_user($data)
     $id = $data['id'];
 
     $sql = mysqli_query($koneksi, "DELETE FROM `tb_user` WHERE `tb_user`.`id_user` = '$id'");
+
+    $hasil = mysqli_affected_rows($koneksi);
+
+    return $hasil;
+}
+
+function hapus_lokasi($data)
+{
+    global $koneksi;
+
+    $id = $data['id'];
+
+    $sql = mysqli_query($koneksi, "DELETE FROM `tb_lokasi` WHERE `tb_lokasi`.`id_lokasi` = '$id'");
 
     $hasil = mysqli_affected_rows($koneksi);
 
@@ -286,7 +332,36 @@ function edit_data_user($data)
     $role = htmlspecialchars($data['role']);
     $id = $data['id'];
 
-    $sql = mysqli_query($koneksi, "UPDATE `tb_user` SET `nama`='$nama', `nomor`='$nomor', `fungsi`='$fungsi', `username`='$user', `password`='$pass', `role`='$role' WHERE `tb_user`.`id_user`='$id'");
+    $pesan = "Informasi akun ASIKA anda berubah. \n";
+    $pesan .= "\n";
+    $pesan .= "Nama : " . $nama . "\n";
+    $pesan .= "Fungsi : " . $fungsi . "\n";
+    $pesan .= "Username : " . $user . "\n";
+    $pesan .= "Password : " . $pass . "\n";
+    $pesan .= "\n";
+    $pesan .= "Terima Kasih telah menggunakan ASIKA. \n";
+    $pesan .= "\n";
+    $pesan .= "Tetap Semangat dan Stay Safe.";
+
+    $passhash = password_hash($pass, PASSWORD_BCRYPT);
+
+    $sql = mysqli_query($koneksi, "UPDATE `tb_user` SET `nama`='$nama', `nomor`='$nomor', `fungsi`='$fungsi', `username`='$user', `password`='$passhash', `role`='$role' WHERE `tb_user`.`id_user`='$id'");
+
+    waa($nomor, $pesan);
+
+    $hasil = mysqli_affected_rows($koneksi);
+
+    return $hasil;
+}
+
+function edit_lokasi($data)
+{
+    global $koneksi;
+
+    $id = $data['id'];
+    $lok = $data['lok'];
+
+    $sql = mysqli_query($koneksi, "UPDATE `tb_lokasi` SET `nama_lokasi`='$lok' WHERE `tb_lokasi`.`id_lokasi`='$id'");
 
     $hasil = mysqli_affected_rows($koneksi);
 
@@ -343,9 +418,9 @@ function setuju_reservasi($data)
     $pesandriver .= "\n";
     $pesandriver .= "Terima Kasih.";
 
-    wa($nomor, $pesan);
+    waa($nomor, $pesan);
 
-    wadriver($nodriver, $pesandriver);
+    waa($nodriver, $pesandriver);
 
     $hasil = mysqli_affected_rows($koneksi);
 
@@ -372,7 +447,7 @@ function tolak_reservasi($data)
     $pesan .= "\n";
     $pesan .= "Tetap Semangat dan Stay Safe.";
 
-    wa($nomor, $pesan);
+    waa($nomor, $pesan);
 
     $hasil = mysqli_affected_rows($koneksi);
 
@@ -384,10 +459,24 @@ function selesai_reservasi($data)
     global $koneksi;
 
     $status = $data['status'];
-    $id = $data['id'];
+    $id = $data['idres'];
+    $nopes = $data['nopes'];
+    $tujuan = $data['tujuan'];
+    $maksud = $data['maksud'];
+    $user = $data['user'];
+    $fungsi = $data['fungsi'];
+    $tanggal = $data['tanggal'];
+    $waktu = $data['waktu'];
+    $iduser = $data['iduser'];
+    $wsel = $data['wsel'];
+    $ket = $data['ket'];
     $id_supir = $data['idsupir'];
+    $nama = $data['nama'];
     $nomor = $data['nomor'];
     $nodriver = $data['nodriver'];
+    $idker = $data['idker'];
+    $nopol = $data['nopol'];
+    $model = $data['model'];
     $pesan = "Terima Kasih telah menggunakan ASIKA. \n";
     $pesan .= "\n";
     $pesan .= "Tetap Semangat dan Stay Safe.";
@@ -396,13 +485,15 @@ function selesai_reservasi($data)
     $pesandriver .= "\n";
     $pesandriver .= "Terima kasih.";
 
-    $sql = mysqli_query($koneksi, "UPDATE `tb_reservasi` SET `status`='$status' WHERE `tb_reservasi`.`id_reservasi`='$id'");
+    $sql = mysqli_query($koneksi, "UPDATE `tb_reservasi` SET `status`='selesai' WHERE `tb_reservasi`.`id_reservasi`='$id'");
 
     $sqll = mysqli_query($koneksi, "UPDATE `tb_status` SET `id_setuju`='',  `status`='Ready' WHERE `tb_status`.`id_supir` = '$id_supir'");
 
-    wa($nomor, $pesan);
+    $sqlll = mysqli_query($koneksi, "INSERT INTO `tb_log`(`id_reservasi`, `no_pesanan`, `tujuan`, `maksud`, `user`, `fungsi`, `nomor`, `tanggal`, `waktu`, `status`, `id_user`, `waktu_selesai`, `keterangan`, `id_supir`, `nama`, `nomor_telp`, `id_kendaraan`, `no_polisi`, `model`) VALUES ('$id','$nopes','$tujuan','$maksud','$user','$fungsi','$nomor','$tanggal', '$waktu','selesai','$iduser','$wsel','$ket','$id_supir','$nama','$nodriver','$idker','$nopol','$model');");
 
-    wadriver($nodriver, $pesandriver);
+    waa($nomor, $pesan);
+
+    waa($nodriver, $pesandriver);
 
 
     $hasil = mysqli_affected_rows($koneksi);
@@ -437,102 +528,73 @@ function logout()
     return true;
 }
 
-function wa($nomor, $pesan)
+function waa($nomor, $pesan)
 {
-    $token = "a1@WjmCaeIWPiK8HJsCB";
-    $target = $nomor;
 
+    $nomor_telepon = $nomor;
 
-    $curl = curl_init();
+    $nomor_telepon = preg_replace('/[^0-9]/', '', $nomor_telepon);
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.fonnte.com/send',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'target' => $target,
-            'message' => $pesan,
+    $nomor_telepon = preg_replace('/^0/', '62', $nomor_telepon);
 
-        ),
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: $token"
-        ),
-    ));
+    $url = "https://pekapge.net/wascm.php";
 
-    $response = curl_exec($curl);
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
+    $headers = array(
+        "Content-Type: application/x-www-form-urlencoded",
+    );
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+    $data = "kepada=" . $nomor_telepon . "&pesanku=" . $pesan . "&key=ZZAWICGWsx11h";
+
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+    //for debug only!
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+    $resp = curl_exec($curl);
     curl_close($curl);
+    //var_dump($resp);
 }
 
-function waadmin($pesan)
+
+
+function waadmin($nomor, $pesan)
 {
 
-    global $nu;
 
-    $token = "a1@WjmCaeIWPiK8HJsCB";
-    $target = $nu['nomor'];
+    $nomor_telepon = $nomor;
 
+    $nomor_telepon = preg_replace('/[^0-9]/', '', $nomor_telepon);
 
-    $curl = curl_init();
+    $nomor_telepon = preg_replace('/^0/', '62', $nomor_telepon);
 
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.fonnte.com/send',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'target' => $target,
-            'message' => $pesan,
+    $url = "https://pekapge.net/wascm.php";
 
-        ),
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: $token"
-        ),
-    ));
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-    $response = curl_exec($curl);
+    $headers = array(
+        "Content-Type: application/x-www-form-urlencoded",
+    );
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
+    $data = "kepada=" . $nomor_telepon . "&pesanku=" . $pesan . "&key=ZZAWICGWsx11h";
+
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+    //for debug only!
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+    $resp = curl_exec($curl);
     curl_close($curl);
-}
-
-function wadriver($nomor, $pesan)
-{
-
-    $token = "a1@WjmCaeIWPiK8HJsCB";
-    $target = $nomor;
-
-
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.fonnte.com/send',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => array(
-            'target' => $target,
-            'message' => $pesan,
-
-        ),
-        CURLOPT_HTTPHEADER => array(
-            "Authorization: $token"
-        ),
-    ));
-
-    $response = curl_exec($curl);
-
-    curl_close($curl);
+    //var_dump($resp);
 }

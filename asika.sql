@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Bulan Mei 2023 pada 01.43
+-- Waktu pembuatan: 19 Jun 2023 pada 09.59
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -45,6 +45,55 @@ INSERT INTO `tb_kendaraan` (`id_kendaraan`, `no_polisi`, `model`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tb_log`
+--
+
+CREATE TABLE `tb_log` (
+  `id_log` int(11) NOT NULL,
+  `id_reservasi` varchar(100) NOT NULL,
+  `no_pesanan` varchar(100) NOT NULL,
+  `tujuan` varchar(100) NOT NULL,
+  `maksud` varchar(100) NOT NULL,
+  `user` varchar(100) NOT NULL,
+  `fungsi` varchar(100) NOT NULL,
+  `nomor` varchar(100) NOT NULL,
+  `tanggal` varchar(100) NOT NULL,
+  `waktu` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `id_user` varchar(100) NOT NULL,
+  `waktu_selesai` varchar(100) NOT NULL,
+  `keterangan` varchar(100) NOT NULL,
+  `id_supir` varchar(100) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `nomor_telp` varchar(100) NOT NULL,
+  `id_kendaraan` varchar(100) NOT NULL,
+  `no_polisi` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_lokasi`
+--
+
+CREATE TABLE `tb_lokasi` (
+  `id_lokasi` int(11) NOT NULL,
+  `nama_lokasi` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_lokasi`
+--
+
+INSERT INTO `tb_lokasi` (`id_lokasi`, `nama_lokasi`) VALUES
+(2, 'CCR 1234'),
+(3, 'PLTP 5 6'),
+(4, 'Kantor PGE LHD Lansot');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tb_reservasi`
 --
 
@@ -63,19 +112,6 @@ CREATE TABLE `tb_reservasi` (
   `waktu_selesai` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tb_reservasi`
---
-
-INSERT INTO `tb_reservasi` (`id_reservasi`, `no_pesanan`, `tujuan`, `maksud`, `user`, `fungsi`, `nomor`, `tanggal`, `waktu`, `status`, `id_user`, `waktu_selesai`, `keterangan`) VALUES
-(53, '64701fd6d8699', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-26', '10:56', 'selesai', '6', '2023-05-29 01:38:25', ''),
-(61, '6473f31d969bb', 'test', 'test', 'User SCM', '', '', '2023-05-29', '08:33', 'selesai', '6', '2023-05-29 01:40:16', ''),
-(62, '6473fc6d44ee0', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-29', '09:14', 'selesai', '6', '2023-05-29 01:40:59', ''),
-(63, '647404df7473e', 'test', 'test', 'Pedro V Rapar', 'Developer', '085823404770', '2023-05-29', '09:49', 'ditolak', '1', '2023-05-29 03:09:33', 'testasets'),
-(64, '6474178731404', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-29', '11:09', 'ditolak', '6', '2023-05-29 03:10:26', 'Faldy sementara tidor'),
-(65, '647418a5d8715', 'test', 'test', 'User SCM', 'SCM', '081523801075', '2023-05-29', '11:14', 'ditolak', '6', '2023-05-29 03:15:12', 'tidak ada driver'),
-(66, '64741ae8bf769', 'PLTP 5 &amp; 6', 'Monitoring Jaringan', 'Sapi', 'ICT', '085158843252', '2023-05-29', '13:30', 'selesai', '8', '2023-05-29 03:25:08', '');
 
 -- --------------------------------------------------------
 
@@ -124,7 +160,13 @@ INSERT INTO `tb_setuju` (`id_setuju`, `id_reservasi`, `id_supir`, `id_kendaraan`
 ('STJ1685322512', '61', 'DRV1684781681', 'MBL1684781878'),
 ('STJ1685322964', '62', 'DRV1684781681', 'MBL1684781878'),
 ('STJ1685323055', '62', 'DRV1684781681', 'MBL1684781878'),
-('STJ1685330675', '66', 'DRV1684892233', 'MBL1684781834');
+('STJ1685330675', '66', 'DRV1684892233', 'MBL1684781834'),
+('STJ1687143589', '72', 'DRV1684781669', 'MBL1684781834'),
+('STJ1687151623', '71', 'DRV1684781669', 'MBL1684781834'),
+('STJ1687151655', '70', 'DRV1684781669', 'MBL1684781834'),
+('STJ1687152064', '74', 'DRV1684781669', 'MBL1684781834'),
+('STJ1687152085', '73', 'DRV1684781681', 'MBL1684781878'),
+('STJ1687159190', '75', 'DRV1684781669', 'MBL1684781834');
 
 -- --------------------------------------------------------
 
@@ -199,12 +241,10 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nama`, `nomor`, `fungsi`, `username`, `password`, `role`) VALUES
-(1, 'Pedro V Rapar', '085823404770', 'Developer', 'edo', 'edoedo', 'developer'),
-(2, 'Administrator', '085817384156', 'ICT', 'admin', 'admin', 'admin'),
-(3, 'User 1', '085256031858', 'ICT', 'user', 'user', 'user'),
-(6, 'User SCM', '123123123', 'SCM', 'user2', 'user2', 'user'),
-(7, 'tes', '123', 'test', 'test', 'test', 'user'),
-(8, 'Sapi', '085158843252', 'ICT', 'user3', 'user3', 'user');
+(1, 'Pedro V Rapar', '085823404770', 'Developer', 'edo', '$2y$10$oeAgop11Y0ghYhx0HKJ/iuZe4k4qXQmEF4zcRoB6ZQfIj.5q2.aw6', 'developer'),
+(2, 'Administrator', '085817384156', 'ICT', 'admin', '$2y$10$ra398rgPxMMhsGFam0wqGuOPLsaQlhbRzmgIv/uH8vF.5Z5TLKVP6', 'admin'),
+(21, 'Pingkan', '081523801075', 'Finance', 'pink', '$2y$10$McCfHU/w8Q4fK9sVFPBhGuqPhqHInk80T66Myrc3/aS1l/eAg.SdK', 'user'),
+(22, 'admin2', '089513636708', 'ICT', 'admin2', '$2y$10$23k/vtbgCK3BT91kDLCIGeGo04daa1DAEqdsbvFCZhgCSMObZGUEW', 'admin');
 
 -- --------------------------------------------------------
 
@@ -230,6 +270,18 @@ CREATE TABLE `tb_user_sementara` (
 --
 ALTER TABLE `tb_kendaraan`
   ADD PRIMARY KEY (`id_kendaraan`);
+
+--
+-- Indeks untuk tabel `tb_log`
+--
+ALTER TABLE `tb_log`
+  ADD PRIMARY KEY (`id_log`);
+
+--
+-- Indeks untuk tabel `tb_lokasi`
+--
+ALTER TABLE `tb_lokasi`
+  ADD PRIMARY KEY (`id_lokasi`);
 
 --
 -- Indeks untuk tabel `tb_reservasi`
@@ -272,10 +324,22 @@ ALTER TABLE `tb_user_sementara`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_log`
+--
+ALTER TABLE `tb_log`
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_lokasi`
+--
+ALTER TABLE `tb_lokasi`
+  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_reservasi`
 --
 ALTER TABLE `tb_reservasi`
-  MODIFY `id_reservasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_reservasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_status`
@@ -287,13 +351,13 @@ ALTER TABLE `tb_status`
 -- AUTO_INCREMENT untuk tabel `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_user_sementara`
 --
 ALTER TABLE `tb_user_sementara`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -24,12 +24,8 @@ if (!isset($_SESSION['qwe'])) {
 	<!--favicon-->
 	<link rel="icon" href="../assets/images/logopertamina.png" type="image/png" />
 	<!--plugins-->
-	<link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-	<link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-	<link href="../assets/plugins/datetimepicker/css/classic.css" rel="stylesheet" />
-	<link href="../assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
-	<link href="../assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
-	<link rel="stylesheet" href="../assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css">
+
+
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link href="../assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
 	<link href="../assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
@@ -121,6 +117,13 @@ if (!isset($_SESSION['qwe'])) {
 						</a>
 					</li>
 					<li>
+						<a href="daftar-lokasi.php">
+							<div class="parent-icon"><i class='bx bx-map'></i>
+							</div>
+							<div class="menu-title">Daftar Lokasi</div>
+						</a>
+					</li>
+					<li>
 						<a href="daftar-mobil.php">
 							<div class="parent-icon"><i class='bx bx-car'></i>
 							</div>
@@ -134,6 +137,7 @@ if (!isset($_SESSION['qwe'])) {
 							</div>
 							<div class="menu-title">Daftar Driver</div>
 						</a>
+
 
 					</li>
 
@@ -185,6 +189,13 @@ if (!isset($_SESSION['qwe'])) {
 						</a>
 					</li>
 					<li>
+						<a href="daftar-lokasi.php">
+							<div class="parent-icon"><i class='bx bx-map'></i>
+							</div>
+							<div class="menu-title">Daftar Lokasi</div>
+						</a>
+					</li>
+					<li>
 						<a href="daftar-mobil.php">
 							<div class="parent-icon"><i class='bx bx-car'></i>
 							</div>
@@ -212,6 +223,7 @@ if (!isset($_SESSION['qwe'])) {
 							</div>
 							<div class="menu-title">User Sementara</div>
 						</a>
+
 					</li>
 
 				<?php

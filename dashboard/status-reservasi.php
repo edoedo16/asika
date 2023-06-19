@@ -32,6 +32,8 @@ if ($_SESSION['role'] == "user") {
     $data2a = mysqli_fetch_assoc($data2);
 
     $setuju = mysqli_query($koneksi, "SELECT * FROM `tb_setuju` JOIN `tb_reservasi` JOIN `tb_supir` JOIN `tb_kendaraan` WHERE `tb_reservasi`.`id_reservasi` = `tb_setuju`.`id_reservasi` AND `tb_supir`.`id_supir` = `tb_setuju`.`id_supir` AND `tb_kendaraan`.`id_kendaraan` = `tb_setuju`.`id_kendaraan`");
+
+    $log = mysqli_query($koneksi, "SELECT * FROM `tb_log`");
 }
 
 
@@ -152,9 +154,23 @@ if ($count2 >= 1) {
                                             <form action="action/proses.php" method="POST">
                                                 <input type="hidden" value="selesaireservasi" name="aksi">
                                                 <input type="hidden" value="selesai" name="status">
-                                                <input type="hidden" value="<?= $d['id_reservasi'] ?>" name="id">
+                                                <input type="hidden" value="<?= $d['id_reservasi'] ?>" name="idres">
+                                                <input type="hidden" value="<?= $d['no_pesanan'] ?>" name="nopes">
+                                                <input type="hidden" value="<?= $d['tujuan'] ?>" name="tujuan">
+                                                <input type="hidden" value="<?= $d['maksud'] ?>" name="maksud">
+                                                <input type="hidden" value="<?= $d['user'] ?>" name="user">
+                                                <input type="hidden" value="<?= $d['fungsi'] ?>" name="fungsi">
+                                                <input type="hidden" value="<?= $d['tanggal'] ?>" name="tanggal">
+                                                <input type="hidden" value="<?= $d['waktu'] ?>" name="waktu">
+                                                <input type="hidden" value="<?= $d['id_user'] ?>" name="iduser">
+                                                <input type="hidden" value="<?= $d['waktu_selesai'] ?>" name="wsel">
+                                                <input type="hidden" value="<?= $d['keterangan'] ?>" name="ket">
                                                 <input type="hidden" value="<?= $d['id_supir'] ?>" name="idsupir">
+                                                <input type="hidden" value="<?= $d['nama'] ?>" name="nama">
                                                 <input type="hidden" value="<?= $d['nomor_telp'] ?>" name="nodriver">
+                                                <input type="hidden" value="<?= $d['id_kendaraan'] ?>" name="idker">
+                                                <input type="hidden" value="<?= $d['no_polisi'] ?>" name="nopol">
+                                                <input type="hidden" value="<?= $d['model'] ?>" name="model">
                                                 <input type="hidden" value="<?= $nu; ?>" name="nomor">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                                                 <button class="btn btn-success">Selesai</button>
@@ -200,7 +216,7 @@ if ($count3 >= 1) {
             </div>
             <hr>
             <div class="table-responsive">
-                <table class="table align-middle mb-0" id="dt">
+                <table class="table align-middle mb-0" id="example2">
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
@@ -215,8 +231,8 @@ if ($count3 >= 1) {
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($setuju as $d) {
-                            if ($d['status'] == "selesai") {
+                        foreach ($log as $d) {
+                            if ($d['status'] == "selesai" || $d['status'] == "ditolak") {
                         ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
