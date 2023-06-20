@@ -3,7 +3,7 @@
 include "../../include/koneksi.php";
 
 $nomoradmin = mysqli_query($koneksi, "SELECT `nomor` FROM `tb_user` WHERE `tb_user`.`role` = 'admin' ");
-$nu = mysqli_fetch_assoc($nomoradmin);
+//$nu = mysqli_fetch_assoc($nomoradmin);
 
 
 function tambah_reservasi($data)
@@ -88,11 +88,19 @@ function tambah_user($data)
 
     $passhash = password_hash($pass, PASSWORD_BCRYPT);
 
-    $sql = mysqli_query($koneksi, "INSERT INTO `tb_user` (`nama`,`nomor`, `fungsi`, `username`, `password`, `role`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$passhash', '$role'); ");
+    $cekusername = mysqli_query($koneksi, "SELECT `username` FROM `tb_user` WHERE `tb_user`.`username` = '$user'");
+    $count = mysqli_num_rows($cekusername);
 
-    $hasil = mysqli_affected_rows($koneksi);
+    if ($count > 0) {
+        $gagaltambah = "gagal";
+        return $gagaltambah;
+    } else {
+        $sql = mysqli_query($koneksi, "INSERT INTO `tb_user` (`nama`,`nomor`, `fungsi`, `username`, `password`, `role`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$passhash', '$role'); ");
 
-    return $hasil;
+        $hasil = mysqli_affected_rows($koneksi);
+
+        return $hasil;
+    }
 }
 
 function tambah_lokasi($data)
@@ -125,23 +133,32 @@ function tambah_user_sementara($data)
     $pesan .= "\n";
     $pesan .= "Tetap Semangat dan Stay Safe.";
 
-    $sql = mysqli_query($koneksi, "INSERT INTO `tb_user_sementara` (`nama`,`nomor`, `fungsi`, `username`, `password`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$pass'); ");
+    $cekusername = mysqli_query($koneksi, "SELECT `username` FROM `tb_user` WHERE `tb_user`.`username` = '$user'");
+    $count = mysqli_num_rows($cekusername);
 
-    $hasil = mysqli_affected_rows($koneksi);
+    if ($count > 0) {
+        $gagaltambah = "gagal";
+        return $gagaltambah;
+    } else {
 
-    waa($nomorwa, $pesan);
+        $sql = mysqli_query($koneksi, "INSERT INTO `tb_user_sementara` (`nama`,`nomor`, `fungsi`, `username`, `password`) VALUES ( '$nama','$nomorwa', '$fungsi', '$user', '$pass'); ");
 
-    $pesanadmin = "Ada yang mendaftarkan akun ASIKA, mohon dicek di user sementara. \n";
-    $pesanadmin .= "\n";
-    $pesanadmin .= "Tetap Semangat dan Stay Safe. \n";
-    $pesanadmin .= "Terima Kasih. \n";
+        $hasil = mysqli_affected_rows($koneksi);
 
-    foreach ($nomoradmin as $d) {
-        $nomora = $d['nomor'];
-        waadmin($nomora, $pesanadmin);
+        waa($nomorwa, $pesan);
+
+        $pesanadmin = "Ada yang mendaftarkan akun ASIKA, mohon dicek di user sementara. \n";
+        $pesanadmin .= "\n";
+        $pesanadmin .= "Tetap Semangat dan Stay Safe. \n";
+        $pesanadmin .= "Terima Kasih. \n";
+
+        foreach ($nomoradmin as $d) {
+            $nomora = $d['nomor'];
+            waadmin($nomora, $pesanadmin);
+        }
+
+        return $hasil;
     }
-
-    return $hasil;
 }
 
 function terima_user_sementara($data)
@@ -345,6 +362,13 @@ function edit_data_user($data)
 
     $passhash = password_hash($pass, PASSWORD_BCRYPT);
 
+    // $cekusername = mysqli_query($koneksi, "SELECT `username` FROM `tb_user` WHERE `tb_user`.`username` = '$user'");
+    // $count = mysqli_num_rows($cekusername);
+
+    // if ($count > 0) {
+    //     $gagaltambah = "gagal";
+    //     return $gagaltambah;
+    // } else {
     $sql = mysqli_query($koneksi, "UPDATE `tb_user` SET `nama`='$nama', `nomor`='$nomor', `fungsi`='$fungsi', `username`='$user', `password`='$passhash', `role`='$role' WHERE `tb_user`.`id_user`='$id'");
 
     waa($nomor, $pesan);
@@ -352,6 +376,7 @@ function edit_data_user($data)
     $hasil = mysqli_affected_rows($koneksi);
 
     return $hasil;
+    //}
 }
 
 function edit_lokasi($data)
@@ -566,7 +591,6 @@ function waa($nomor, $pesan)
 
 function waadmin($nomor, $pesan)
 {
-
 
     $nomor_telepon = $nomor;
 

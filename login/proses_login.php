@@ -18,7 +18,7 @@ if (isset($_POST['login'])) {
     if ($row >= 1) {
         $passs = $selek['password'];
         if (password_verify($pass, $passs)) {
-            if ($selek["role"] == "developer") {
+            if ($selek["role"] == "ICT") {
                 $_SESSION['status'] = "Sukses";
                 $_SESSION['qwe'] = $selek['nama'];
                 $_SESSION['fungsi'] = $selek['fungsi'];

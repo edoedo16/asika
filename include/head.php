@@ -155,7 +155,7 @@ if (!isset($_SESSION['qwe'])) {
 
 				<?php
 
-				if ($_SESSION['role'] == "developer") {
+				if ($_SESSION['role'] == "ICT") {
 
 				?>
 					<li>

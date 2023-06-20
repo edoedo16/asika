@@ -74,7 +74,7 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 								<select name="role" class="form-control">
 									<option value="user">User</option>
 									<option value="admin">Admin</option>
-									<option value="developer">Developer</option>
+									<option value="ICT">ICT</option>
 								</select>
 							</div>
 						</div>
@@ -127,7 +127,7 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 				<div class="col-12">
 					<div class="alert alert-outline-danger shadow-sm alert-dismissible fade show py-2">
 						<div class="d-flex align-items-center">
-							<div class="font-35 text-danger"><i class='bx bxs-check-circle'></i>
+							<div class="font-35 text-danger"><i class='bx bx-message-square-x'></i>
 							</div>
 							<div class="ms-3">
 								<h6 class="mb-0 text-danger"><?= $_SESSION['pesan'] ?></h6>
@@ -240,7 +240,7 @@ $data = mysqli_query($koneksi, "SELECT * FROM `tb_user` WHERE `tb_user`.`id_user
 														<select name="role" class="form-control">
 															<option value="user" selected>User</option>
 															<option value="admin">Admin</option>
-															<option value="developer">Developer</option>
+															<option value="ICT">ICT</option>
 														</select>
 													</div>
 												</div>

@@ -178,7 +178,10 @@ if (isset($_POST['aksi'])) {
     } else if ($_POST['aksi'] == "tambahuser") {
         $berhasil = tambah_user($_POST);
 
-        if ($berhasil > 0) {
+        if ($berhasil == "gagal") {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Username sudah ada, tidak boleh sama";
+        } else if ($berhasil > 0) {
             $_SESSION['alert'] = "success";
             $_SESSION['pesan'] = "Data User berhasil ditambahkan";
         } else {
@@ -192,7 +195,10 @@ if (isset($_POST['aksi'])) {
     } else if ($_POST['aksi'] == "tambahusersementara") {
         $berhasil = tambah_user_sementara($_POST);
 
-        if ($berhasil > 0) {
+        if ($berhasil == "gagal") {
+            $_SESSION['alert'] = "gagal";
+            $_SESSION['pesan'] = "Username sudah ada, tidak boleh sama";
+        } else if ($berhasil > 0) {
             $_SESSION['alert'] = "success";
             $_SESSION['pesan'] = "Data User berhasil ditambahkan";
         } else {
@@ -253,7 +259,7 @@ if (isset($_POST['aksi'])) {
             $_SESSION['pesan'] = "Data User berhasil diedit";
         } else {
             $_SESSION['alert'] = "gagal";
-            $_SESSION['pesan'] = "Data Driver gagal diedit";
+            $_SESSION['pesan'] = "Data User gagal diedit";
         }
 
         echo "<script>

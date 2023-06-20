@@ -79,7 +79,7 @@ if (isset($_SESSION['nama'])) {
                                             <div class="col-12">
                                                 <div class="alert alert-outline-danger shadow-sm alert-dismissible fade show py-2">
                                                     <div class="d-flex align-items-center">
-                                                        <div class="font-35 text-danger"><i class='bx bxs-check-circle'></i>
+                                                        <div class="font-35 text-danger"><i class='bx bxs-message-square-x'></i>
                                                         </div>
                                                         <div class="ms-3">
                                                             <h6 class="mb-0 text-danger"><?= $_SESSION['pesan'] ?></h6>
